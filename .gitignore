@@ -1,24 +1,18 @@
-# --- Carpetas de compilación ---
+# --- Carpetas generadas ---
 /build/
 /dist/
-
-# --- Configuración local de NetBeans ---
 /nbproject/private/
 /nbbuild/
 /nbdist/
-/nbactions.xml
-/nb-configuration.xml
-
-# --- Archivos compilados ---
-*.class
 
 # --- Archivos temporales ---
+*.class
 *.log
 *.tmp
 *.bak
 *.swp
 
-# --- Configuración de otros IDEs ---
+# --- Configuración IDE (otros editores, no NetBeans) ---
 /.idea/
 /.vscode/
 /*.iml
