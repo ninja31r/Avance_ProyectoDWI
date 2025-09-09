@@ -4,8 +4,8 @@
     Author     : Juan Andre Zea Apaza
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="modelo_entidad.Cliente"%>
-<%@page import="modelo_dao.ClienteDAO"%>
+<%@page import="modelo_entidad.Usuario"%>
+<%@page import="modelo_dao.UsuarioDAO"%>
 
 <!DOCTYPE html>
 <html>
@@ -42,8 +42,8 @@
                     <div class="card-body">
                         <form method="post" action="login.jsp">
                             <div class="mb-3">
-                                <label class="form-label">Usuario</label>
-                                <input type="text" class="form-control" name="txtUsuario" required>
+                                <label class="form-label">Correo</label>
+                                <input type="email" class="form-control" name="txtCorreo" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Contraseña</label>
@@ -55,22 +55,23 @@
                                 </button>
                             </div>
                         </form>
-                        <%
-                            if(request.getParameter("accion")!=null){
-                                String usuario = request.getParameter("txtUsuario");
-                                String password = request.getParameter("txtPassword");
-                                ClienteDAO dao = new ClienteDAO();
-                                Cliente cli = dao.validar(usuario, password);
-                                if(cli.getUsuario()!=null){
-                                    session.setAttribute("usuario", cli);
-                                    response.sendRedirect("menu.jsp");
-                                }else{
-                        %>
-                            <div class="alert alert-danger mt-3">Usuario o contraseña incorrectos</div>
-                        <%
-                                }
-                            }
-                        %>
+<%
+    if(request.getParameter("accion") != null){
+        String correo = request.getParameter("txtCorreo");
+        String password = request.getParameter("txtPassword");
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario u = dao.validar(correo, password);
+
+        if(u != null && u.getCorreo() != null){
+            session.setAttribute("usuario", u);
+            response.sendRedirect("menu.jsp");
+        } else {
+%>
+            <div class="alert alert-danger mt-3">Correo o contraseña incorrectos</div>
+<%
+        }
+    }
+%>
                     </div>
                 </div>
             </div>
@@ -78,4 +79,3 @@
     </div>
 </body>
 </html>
-

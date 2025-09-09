@@ -5,12 +5,13 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="modelo_entidad.Cliente"%>
+<%@page import="modelo_entidad.Usuario"%>
 
 <%
-    Cliente cli = (Cliente)session.getAttribute("usuario");
-    if(cli == null){
+    Usuario u = (Usuario)session.getAttribute("usuario");
+    if(u == null){
         response.sendRedirect("login.jsp");
+        return; // <-- importante, evita que siga procesando
     }
 %>
 
@@ -23,7 +24,7 @@
 </head>
 <body class="bg-light">
     <div class="container mt-5 text-center">
-        <h2 class="mb-4">Bienvenido, <%=cli.getUsuario()%></h2>
+        <h2 class="mb-4">Bienvenido, <%=u.getCorreo()%></h2>
         <a href="cerrar.jsp" class="btn btn-danger">Cerrar Sesión</a>
     </div>
 </body>
