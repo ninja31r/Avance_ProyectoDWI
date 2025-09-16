@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="modelo_entidad.Usuario"%>
+<%@page import="model.Usuario"%>
 
 <%
     Usuario u = (Usuario)session.getAttribute("usuario");

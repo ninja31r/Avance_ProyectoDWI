@@ -4,8 +4,8 @@
     Author     : Juan Andre Zea Apaza
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="modelo_entidad.Usuario"%>
-<%@page import="modelo_dao.UsuarioDAO"%>
+<%@page import="model.Usuario"%>
+<%@page import="dao.UsuarioDAO"%>
 
 <!DOCTYPE html>
 <html>

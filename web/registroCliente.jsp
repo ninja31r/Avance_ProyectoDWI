@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="modelo_dao.ClienteDAO"%>
-<%@page import="modelo_entidad.Cliente"%>
+<%@page import="model.Usuario"%>
+<%@page import="dao.UsuarioDAO"%>
 <%@page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
@@ -33,8 +33,8 @@
 
     <form method="post" action="registroCliente.jsp" class="card p-3 mb-4">
         <div class="mb-3">
-            <label class="form-label">Usuario</label>
-            <input type="text" name="txtUsuario" class="form-control" required>
+            <label class="form-label">Correo</label>
+            <input type="text" name="txtCorreo" class="form-control" required>
         </div>
         <div class="mb-3">
             <label class="form-label">Contraseña</label>
@@ -44,20 +44,20 @@
     </form>
 
     <%
-        ClienteDAO dao = new ClienteDAO();
+        UsuarioDAO dao = new UsuarioDAO();
 
         // Acción registrar
         if("Registrar".equals(request.getParameter("accion"))){
-            String usuario = request.getParameter("txtUsuario");
+            String correo = request.getParameter("txtCorreo");
             String password = request.getParameter("txtPassword");
-            Cliente cli = new Cliente();
-            cli.setUsuario(usuario);
+            Usuario cli = new Usuario();
+            cli.setCorreo(correo);
             cli.setPassword(password);
             dao.insertar(cli);
         }
 
         // Listar clientes
-        ArrayList<Cliente> lista = dao.listar();
+        ArrayList<Usuario> lista = dao.listar();
     %>
 
     <h3>Clientes Registrados</h3>
@@ -65,17 +65,17 @@
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
-                <th>Usuario</th>
+                <th>Correo</th>
                 <th>Contraseña</th>
             </tr>
         </thead>
         <tbody>
         <%
-            for(Cliente c : lista){
+            for(Usuario c : lista){
         %>
             <tr>
                 <td><%=c.getId()%></td>
-                <td><%=c.getUsuario()%></td>
+                <td><%=c.getCorreo()%></td>
                 <td><%=c.getPassword()%></td>
             </tr>
         <%

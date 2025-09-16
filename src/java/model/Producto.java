@@ -1,13 +1,13 @@
-package modelo_entidad;
+package model;
 
-public class Usuario {
+public class Producto {
     private int id;
     private String correo;   // antes: usuario
     private String password;
 
-    public Usuario() {}
+    public Producto() {}
 
-    public Usuario(int id, String correo, String password) {
+    public Producto(int id, String correo, String password) {
         this.id = id;
         this.correo = correo;
         this.password = password;

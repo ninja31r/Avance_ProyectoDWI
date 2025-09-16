@@ -1,10 +1,11 @@
-package modelo_dao;
+package dao;
 
+import util.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import modelo_entidad.Usuario;
+import model.Usuario;
 
 public class UsuarioDAO {
 
@@ -42,7 +43,7 @@ public class UsuarioDAO {
     public int insertar(Usuario u) {
         int r = 0;
         try {
-            String sql = "INSERT INTO usuario (correo, password) VALUES (?, ?)";
+            String sql = "INSERT INTO Usuario (correo, password) VALUES (?, ?)";
             Connection con = Conexion.conectar();
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, u.getCorreo());
@@ -61,14 +62,14 @@ public class UsuarioDAO {
     public ArrayList<Usuario> listar() {
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM usuario ORDER BY correo";
+            String sql = "SELECT * FROM Usuario ORDER BY correo";
             Connection con = Conexion.conectar();
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
                 Usuario u = new Usuario();
-                u.setId(rs.getInt("id"));
+                u.setId(rs.getInt("usuario_id"));
                 u.setCorreo(rs.getString("correo")); 
                 u.setPassword(rs.getString("password"));
                 lista.add(u);

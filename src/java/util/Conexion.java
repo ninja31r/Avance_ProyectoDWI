@@ -1,4 +1,4 @@
-package modelo_dao;
+package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,4 +26,3 @@ public class Conexion {
         return conexion;
     }
 }
-
