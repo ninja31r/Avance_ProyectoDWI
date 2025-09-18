@@ -12,31 +12,33 @@ public class UsuarioDAO {
     public Usuario validar(String correo, String password) {
         Usuario u = null;
 
-        try {
-            String sql = "SELECT * FROM Usuario WHERE correo=? AND password=?";
-            Connection con = Conexion.conectar();
-            PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, correo);
-            pst.setString(2, password);
-            ResultSet rs = pst.executeQuery();
+          try {
+        String sql = "SELECT usuario_id, correo, password, rol_id FROM Usuario WHERE correo=? AND password=?";
+        Connection con = Conexion.conectar();
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, correo);
+        pst.setString(2, password);
+        ResultSet rs = pst.executeQuery();
 
-            if (rs.next()) {
-                u = new Usuario();
-                u.setId(rs.getInt("usuario_id"));
-                u.setCorreo(rs.getString("correo"));
-                u.setPassword(rs.getString("password"));
-            }
-
-            rs.close();
-            pst.close();
-            con.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (rs.next()) {
+            u = new Usuario();
+            u.setId(rs.getInt("usuario_id"));
+            u.setCorreo(rs.getString("correo"));
+            u.setPassword(rs.getString("password"));
+            u.setRol_id(rs.getInt("rol_id")); 
+            System.out.println("DEBUG -> Login correcto: " + u.getCorreo() + " rol=" + u.getRol_id());
         }
 
-        return u;
+        rs.close();
+        pst.close();
+        con.close();
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    return u;
+}
 
     // método para insertar usuario
     public int insertar(Usuario u) {
@@ -68,9 +70,10 @@ public class UsuarioDAO {
 
             while (rs.next()) {
                 Usuario u = new Usuario();
-                u.setId(rs.getInt("id"));
+            u.setId(rs.getInt("usuario_id")); // 👈 corregido
                 u.setCorreo(rs.getString("correo")); 
                 u.setPassword(rs.getString("password"));
+                u.setRol_id(rs.getInt("rol_id")); 
                 lista.add(u);
             }
 

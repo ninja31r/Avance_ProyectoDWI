@@ -9,7 +9,6 @@
 <%@page import="modelo_entidad.Cliente"%>
 <%@page import="java.util.ArrayList"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,17 +18,25 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2>Clientes Registrados</h2>
+    <h2 class="mb-4 text-center">Clientes Registrados</h2>
+
     <%
         ClienteDAO dao = new ClienteDAO();
         ArrayList<Cliente> lista = dao.listar();
+        if(lista.isEmpty()){
     %>
-    <table class="table table-bordered">
+        <div class="alert alert-warning text-center">
+            No hay clientes registrados aún.
+        </div>
+    <%
+        } else {
+    %>
+    <table class="table table-striped table-hover shadow-sm">
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Usuario</th>
-                <th>Contraseña</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -39,13 +46,19 @@
             <tr>
                 <td><%=c.getId()%></td>
                 <td><%=c.getUsuario()%></td>
-                <td><%=c.getPassword()%></td>
+                <td>
+                    <a href="editarCliente.jsp?id=<%=c.getId()%>" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="eliminarCliente.jsp?id=<%=c.getId()%>" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
             </tr>
         <%
             }
         %>
         </tbody>
     </table>
+    <%
+        }
+    %>
 </div>
 </body>
 </html>

@@ -1,10 +1,13 @@
 <%-- 
     Document   : login
-    Created on : 3 set. 2025, 11:03:44
+    Created on : 3 set. 2025
     Author     : Juan Andre Zea Apaza
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="modelo_entidad.Usuario"%>
+<%
+    Usuario usuarioLog = (Usuario) session.getAttribute("usuario");
+%>
 <%@page import="modelo_dao.UsuarioDAO"%>
 
 <!DOCTYPE html>
@@ -15,7 +18,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-     <!-- Barra de navegación -->
+    <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="index.jsp">Auditel Import S.A.C</a>
@@ -25,13 +28,13 @@
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.jsp">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="productos.jsp">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.jsp">Iniciar Sesión</a></li>
+                    
                     <li class="nav-item"><a class="nav-link" href="registroCliente.jsp">Registrarse</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-4">
@@ -55,23 +58,35 @@
                                 </button>
                             </div>
                         </form>
-<%
-    if(request.getParameter("accion") != null){
-        String correo = request.getParameter("txtCorreo");
-        String password = request.getParameter("txtPassword");
-        UsuarioDAO dao = new UsuarioDAO();
-        Usuario u = dao.validar(correo, password);
 
-        if(u != null && u.getCorreo() != null){
-            session.setAttribute("usuario", u);
-            response.sendRedirect("menu.jsp");
-        } else {
-%>
-            <div class="alert alert-danger mt-3">Correo o contraseña incorrectos</div>
-<%
-        }
-    }
-%>
+                                <%
+                                    if(request.getParameter("accion") != null){
+                                        String correo = request.getParameter("txtCorreo");
+                                        String password = request.getParameter("txtPassword");
+                                        UsuarioDAO dao = new UsuarioDAO();
+                                        Usuario u = dao.validar(correo, password);
+
+                                        if(u != null && u.getCorreo() != null){
+                                            session.setAttribute("usuario", u);
+
+                                            // Redirección según rol
+                                            if(u.getRol_id() == 1){ // Cliente
+                                                response.sendRedirect("index.jsp");
+                                            } else if(u.getRol_id() == 2){ // Ventas
+                                                response.sendRedirect("menuVentas.jsp");
+                                            } else if(u.getRol_id() == 3){ // Servicios
+                                                response.sendRedirect("menuServicios.jsp");
+                                            } else {
+                                                response.sendRedirect("menu.jsp"); // Default
+                                            }
+
+                                        } else {
+                                %>
+                                            <div class="alert alert-danger mt-3">Correo o contraseña incorrectos</div>
+                                <%
+                                        }
+                                    }
+                                %>
                     </div>
                 </div>
             </div>

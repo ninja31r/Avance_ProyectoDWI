@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="modelo_entidad.Usuario"%>
+<%
+    Usuario usuarioLog = (Usuario) session.getAttribute("usuario");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,23 +18,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Barra de navegación -->
+     <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="index.jsp">Telecomunicaciones</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.jsp">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="productos.jsp">Productos</a></li>
+    <div class="container">
+        <a class="navbar-brand" href="index.jsp">Auditel Import S.A.C</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.jsp">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="productos.jsp">Productos</a></li>
+
+                <% if(usuarioLog == null){ %>
                     <li class="nav-item"><a class="nav-link" href="login.jsp">Iniciar Sesión</a></li>
                     <li class="nav-item"><a class="nav-link" href="registroCliente.jsp">Registrarse</a></li>
-                </ul>
-            </div>
+                <% } else { %>
+                    <li class="nav-item"><a class="nav-link text-warning" href="cerrar.jsp">Cerrar Sesión</a></li>
+                <% } %>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Contenido principal -->
     <div class="container mt-5">

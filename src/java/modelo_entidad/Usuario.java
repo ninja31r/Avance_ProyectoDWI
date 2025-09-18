@@ -4,6 +4,7 @@ public class Usuario {
     private int id;
     private String correo;   // antes: usuario
     private String password;
+    private int rol_id;
 
     public Usuario() {}
 
@@ -32,5 +33,11 @@ public class Usuario {
     }
     public void setPassword(String password) { 
         this.password = password; 
+    }
+    public int getRol_id() {
+        return rol_id;
+    }
+    public void setRol_id(int rol_id) {
+        this.rol_id = rol_id;
     }
 }
