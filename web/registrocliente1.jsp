@@ -39,6 +39,18 @@
 
     <form method="post" action="registrocliente1.jsp" class="card p-3 mb-4">
         <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="txtNombre" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Apellidos</label>
+            <input type="text" name="txtApellidos" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input type="text" name="txtTelefono" class="form-control" required>
+        </div>
+        <div class="mb-3">
             <label class="form-label">Correo</label>
             <input type="email" 
                    name="txtCorreo" 
@@ -56,49 +68,33 @@
     <%
         UsuarioDAO dao = new UsuarioDAO();
 
-        // Acción registrar
         if("Registrar".equals(request.getParameter("accion"))){
+            String nombre = request.getParameter("txtNombre");
+            String apellidos = request.getParameter("txtApellidos");
+            String telefono = request.getParameter("txtTelefono");
             String correo = request.getParameter("txtCorreo");
             String password = request.getParameter("txtPassword");
 
             Usuario u = new Usuario();
+            u.setNombre(nombre);
+            u.setApellidos(apellidos);
+            u.setTelefono(telefono);
             u.setCorreo(correo);
             u.setPassword(password);
-            u.setRol_id(1); // por defecto rol cliente
+            u.setRol_id(1); 
 
-            dao.insertar(u);
-        }
-
-        // Listar usuarios
-        ArrayList<Usuario> lista = dao.listar();
+            int r = dao.insertar(u);
+            if(r > 0){
     %>
-
-    <h3>Usuarios Registrados</h3>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Correo</th>
-                <th>Contraseña</th>
-                <th>Rol</th>
-            </tr>
-        </thead>
-        <tbody>
-        <%
-            for(Usuario u : lista){
-        %>
-            <tr>
-                <td><%=u.getId()%></td>
-                <td><%=u.getCorreo()%></td>
-                <td><%=u.getPassword()%></td>
-                <td><%=u.getRol_id()%></td>
-            </tr>
-        <%
+                <div class="alert alert-success mt-3"> Usuario registrado correctamente.</div>
+    <%
+            } else {
+    %>
+                <div class="alert alert-danger mt-3"> Error al registrar el usuario.</div>
+    <%
             }
-        %>
-        </tbody>
-    </table>
+        }
+    %>
 </div>
 </body>
 </html>
-
