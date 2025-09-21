@@ -108,7 +108,7 @@
             <div class="carousel-inner rounded-4">
 
                 <div class="carousel-item active">
-                    <img src="img/internet.jpg" class="d-block w-100 rounded-4" alt="Internet">
+                    <img src="https://forbes.es/wp-content/uploads/2023/11/FTTRINternet.jpg" class="d-block w-100 rounded-4" alt="Internet">
                     <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-4 p-3">
                         <h5>Internet de Alta Velocidad</h5>
                         <p>Conexión confiable para hogares y empresas.</p>
@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="carousel-item">
-                    <img src="img/camaras.jpg" class="d-block w-100 rounded-4" alt="Cámaras">
+                    <img src="https://sigmixv.com/wp-content/uploads/servicios-de-CCTV-en-la-nube-SIGMIXV-1024x535.jpeg" class="d-block w-100 rounded-4" alt="Cámaras">
                     <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-4 p-3">
                         <h5>Cámaras de Seguridad</h5>
                         <p>Protege tu hogar o negocio con tecnología avanzada.</p>
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="carousel-item">
-                    <img src="img/equipos.jpg" class="d-block w-100 rounded-4" alt="Equipos">
+                    <img src="https://www.htw.com.pe/wp-content/uploads/2019/09/Alquiler-de-equipos-informaticos.jpg" class="d-block w-100 rounded-4" alt="Equipos">
                     <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-4 p-3">
                         <h5>Equipos Tecnológicos</h5>
                         <p>Soluciones modernas para conectividad y productividad.</p>
@@ -188,8 +188,8 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5 class="fw-bold">Contacto</h5>
-                    <p>Email: contacto@auditel.com</p>
-                    <p>Teléfono: +51 999 999 999</p>
+                    <p>Email: Diego@auditel.com</p>
+                    <p>Teléfono: +51 978392134</p>
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5 class="fw-bold">Síguenos</h5>
