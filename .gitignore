@@ -4,6 +4,9 @@
 /nbproject/private/
 /nbbuild/
 /nbdist/
+/nbproject/*.properties
+/nbproject/genfiles.properties
+/nbproject/project.xml
 
 # --- Archivos temporales ---
 *.class
