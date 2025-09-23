@@ -1,47 +1,6 @@
-<%-- 
-    Document   : index
-    Created on : 3 set. 2025, 11:57:59
-    Author     : Juan Andre Zea Apaza
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="modelo_entidad.Usuario"%>
-<%
-    Usuario usuarioLog = (Usuario) session.getAttribute("usuario");
-%>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Inicio - Auditel Import S.A.C</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.jsp">Auditel Import S.A.C</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.jsp">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="productos.jsp">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contratarServicios.jsp">Servicios</a></li>
-
-                    <% if(usuarioLog == null){ %>
-                        <li class="nav-item"><a class="nav-link" href="login.jsp">Iniciar Sesión</a></li>
-                        <li class="nav-item"><a class="nav-link" href="registrocliente1.jsp">Registrarse</a></li>
-                    <% } else { %>
-                        <li class="nav-item"><a class="nav-link text-warning" href="cerrar.jsp">Cerrar Sesión</a></li>
-                    <% } %>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<%@page import="java.util.List"%>
+<jsp:include page="components/layout/header.jsp" />
 
     <!-- Hero Section -->
     <div class="container mt-5">
@@ -51,14 +10,6 @@
         </div>
     </div>
 
-    <!-- Mensaje personalizado -->
-    <% if(usuarioLog != null){ %>
-        <div class="container mb-5 text-center">
-            <div class="alert alert-success shadow-sm rounded-4">
-                Hola, <strong><%= usuarioLog.getNombre() %></strong>, gracias por iniciar sesión.
-            </div>
-        </div>
-    <% } %>
 
     <!-- Información de la Empresa -->
     <div class="container mb-5">
@@ -178,31 +129,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-primary text-white pt-5 pb-3 mt-5">
-        <div class="container">
-            <div class="row text-center text-md-start">
-                <div class="col-md-4 mb-3">
-                    <h5 class="fw-bold">Auditel Import S.A.C</h5>
-                    <p>Soluciones tecnológicas confiables para hogares y empresas.</p>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h5 class="fw-bold">Contacto</h5>
-                    <p>Email: Diego@auditel.com</p>
-                    <p>Teléfono: +51 978392134</p>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h5 class="fw-bold">Síguenos</h5>
-                    <a href="#" class="text-white me-3">Facebook</a>
-                    <a href="#" class="text-white me-3">Twitter</a>
-                    <a href="#" class="text-white">Instagram</a>
-                </div>
-            </div>
-            <hr class="border-light">
-            <div class="text-center mt-3">&copy; 2025 Auditel Import S.A.C. Todos los derechos reservados.</div>
-        </div>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+   <jsp:include page="components/layout/footer.jsp" />
+
+

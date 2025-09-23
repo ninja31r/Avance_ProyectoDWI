@@ -12,7 +12,7 @@ import modelo_dao.ServicioDAO;
 import modelo_entidad.Servicio;
 
 @WebServlet(name = "svltServicio", urlPatterns = {"/svltServicio"})
-public class svltServicio extends HttpServlet {
+public class ServicioServlet extends HttpServlet {
 
     private ServicioDAO dao = new ServicioDAO();
 
@@ -32,53 +32,46 @@ public class svltServicio extends HttpServlet {
             throws ServletException, IOException {
 
         String accion = request.getParameter("accion");
-        System.out.println("👉 Acción recibida: " + accion);
+        System.out.println("Acción recibida: " + accion);
 
         if (accion == null) accion = "listar";
+
+        String jspDestino = "menuServicios.jsp";
 
         switch (accion) {
             case "registrar": {
                 try {
-                    System.out.println("🔹 Entrando en REGISTRAR...");
+                    System.out.println("Entrando en REGISTRAR...");
                     Servicio s = new Servicio();
                     s.setNombre(request.getParameter("nombre"));
                     s.setPrecio(Double.parseDouble(request.getParameter("precio")));
-                    s.setCliente(request.getParameter("cliente"));
                     s.setDescripcion(request.getParameter("descripcion"));
-                    s.setEstado(request.getParameter("estado"));
-                    s.setFecha(java.sql.Date.valueOf(request.getParameter("fecha")));
-
-                    System.out.println("📥 Datos recibidos para registrar:");
+                    
+                    System.out.println("Datos recibidos para registrar:");
                     System.out.println("Nombre: " + s.getNombre());
                     System.out.println("Precio: " + s.getPrecio());
-                    System.out.println("Cliente: " + s.getCliente());
                     System.out.println("Descripcion: " + s.getDescripcion());
-                    System.out.println("Estado: " + s.getEstado());
-                    System.out.println("Fecha: " + s.getFecha());
-
+                    
                     dao.registrar(s);
                 } catch (Exception e) {
-                    System.out.println("❌ Error en registrar: " + e.getMessage());
+                    System.out.println("Error en registrar: " + e.getMessage());
                     e.printStackTrace();
                 }
                 break;
             }
             case "editar": {
                 try {
-                    System.out.println("🔹 Entrando en EDITAR...");
+                    System.out.println("Entrando en EDITAR...");
                     Servicio s = new Servicio();
                     s.setId(Integer.parseInt(request.getParameter("id")));
                     s.setNombre(request.getParameter("nombre"));
                     s.setPrecio(Double.parseDouble(request.getParameter("precio")));
-                    s.setCliente(request.getParameter("cliente"));
                     s.setDescripcion(request.getParameter("descripcion"));
-                    s.setEstado(request.getParameter("estado"));
-                    s.setFecha(java.sql.Date.valueOf(request.getParameter("fecha")));
 
-                    System.out.println("📥 Datos recibidos para editar ID=" + s.getId());
+                    System.out.println("Datos recibidos para editar ID=" + s.getId());
                     dao.actualizar(s);
                 } catch (Exception e) {
-                    System.out.println("❌ Error en editar: " + e.getMessage());
+                    System.out.println(" Error en editar: " + e.getMessage());
                     e.printStackTrace();
                 }
                 break;
@@ -86,24 +79,26 @@ public class svltServicio extends HttpServlet {
             case "eliminar": {
                 try {
                     int id = Integer.parseInt(request.getParameter("id"));
-                    System.out.println("🔹 Eliminando servicio con ID=" + id);
+                    System.out.println(" Eliminando servicio con ID=" + id);
                     dao.eliminar(id);
                 } catch (Exception e) {
-                    System.out.println("❌ Error en eliminar: " + e.getMessage());
+                    System.out.println("Error en eliminar: " + e.getMessage());
                     e.printStackTrace();
                 }
                 break;
             }
+            case "listar":
             default:
-                System.out.println("🔹 Listando servicios...");
+                System.out.println("Listando servicios...");
+                jspDestino = "servicios.jsp";
                 break;
         }
 
         List<Servicio> lista = dao.listar();
-        System.out.println("📊 Cantidad de servicios listados: " + lista.size());
+        System.out.println("Cantidad de servicios listados: " + lista.size());
 
         request.setAttribute("listaServicios", lista);
-        RequestDispatcher rd = request.getRequestDispatcher("menuServicios.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher(jspDestino);
         rd.forward(request, response);
     }
 

@@ -19,10 +19,7 @@ public class ServicioDAO {
                 s.setId(rs.getInt("servicio_id"));
                 s.setNombre(rs.getString("nombre"));
                 s.setPrecio(rs.getDouble("precio"));
-                s.setCliente(rs.getString("cliente"));
                 s.setDescripcion(rs.getString("descripcion"));
-                s.setEstado(rs.getString("estado"));
-                s.setFecha(rs.getDate("fecha"));
                 lista.add(s);
             }
         } catch (SQLException e) {
@@ -39,10 +36,7 @@ public class ServicioDAO {
 
             ps.setString(1, s.getNombre());
             ps.setDouble(2, s.getPrecio());
-            ps.setString(3, s.getCliente());
             ps.setString(4, s.getDescripcion());
-            ps.setString(5, s.getEstado());
-            ps.setDate(6, new java.sql.Date(s.getFecha().getTime()));
 
             ps.executeUpdate();
             System.out.println("✅ Servicio registrado correctamente");
@@ -59,10 +53,7 @@ public class ServicioDAO {
 
             ps.setString(1, s.getNombre());
             ps.setDouble(2, s.getPrecio());
-            ps.setString(3, s.getCliente());
             ps.setString(4, s.getDescripcion());
-            ps.setString(5, s.getEstado());
-            ps.setDate(6, new java.sql.Date(s.getFecha().getTime()));
             ps.setInt(7, s.getId());
 
             ps.executeUpdate();

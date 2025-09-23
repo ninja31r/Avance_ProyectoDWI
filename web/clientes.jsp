@@ -5,8 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="modelo_dao.ClienteDAO"%>
-<%@page import="modelo_entidad.Cliente"%>
+<%@page import="modelo_dao.UsuarioDAO"%>
+<%@page import="modelo_entidad.Usuario"%>
 <%@page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
@@ -21,8 +21,8 @@
     <h2 class="mb-4 text-center">Clientes Registrados</h2>
 
     <%
-        ClienteDAO dao = new ClienteDAO();
-        ArrayList<Cliente> lista = dao.listar();
+        UsuarioDAO dao = new UsuarioDAO();
+        ArrayList<Usuario> lista = dao.listar();
         if(lista.isEmpty()){
     %>
         <div class="alert alert-warning text-center">
@@ -41,11 +41,11 @@
         </thead>
         <tbody>
         <%
-            for(Cliente c : lista){
+            for(Usuario c : lista){
         %>
             <tr>
                 <td><%=c.getId()%></td>
-                <td><%=c.getUsuario()%></td>
+                <td><%=c.getNombre()%></td>
                 <td>
                     <a href="editarCliente.jsp?id=<%=c.getId()%>" class="btn btn-sm btn-warning">Editar</a>
                     <a href="eliminarCliente.jsp?id=<%=c.getId()%>" class="btn btn-sm btn-danger">Eliminar</a>
