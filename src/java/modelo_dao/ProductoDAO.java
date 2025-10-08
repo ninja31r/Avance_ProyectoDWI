@@ -29,7 +29,7 @@ public class ProductoDAO {
                 producto.setNombre(rs.getString("nombre"));
                 producto.setStock(rs.getInt("stock"));
                 producto.setPrecio(rs.getInt("precio"));
-                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setImagen(rs.getString("imagen"));
                 productos.add(producto);
             }
 

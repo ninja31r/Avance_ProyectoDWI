@@ -15,10 +15,9 @@
                 <div class="col-md-4">
                     <div class="card h-100 shadow-sm">
 
-                        <img src="https://via.placeholder.com/300x200?text=Producto" class="card-img-top" alt="<%= p.getNombre() %>">
+                        <img src="<%= p.getImagen() %>" class="card-img-top">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title"><%= p.getNombre() %></h5>
-                            <p class="card-text text-muted"><%= p.getDescripcion() %></p>
                             <p class="fw-bold text-primary">S/. <%= p.getPrecio() %></p>
                             <p class="text-muted">Stock: <%= p.getStock() %></p>
                             <a href="login.jsp" class="btn btn-primary mt-auto">Agregar al Carrito</a>

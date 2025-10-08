@@ -5,16 +5,16 @@ public class Producto {
     private String nombre;
     private int stock;
     private int precio;
-    private String descripcion;
+    private String imagen;
 
     public Producto() {}
 
-    public Producto(int id, String nombre, int stock, int precio, String descripcion) {
+    public Producto(int id, String nombre, int stock, int precio, String imagen) {
         this.id = id;
         this.nombre = nombre;
         this.stock = stock;
         this.precio = precio;
-        this.descripcion = descripcion;
+        this.imagen = imagen;
     }
 
     // Getters
@@ -34,8 +34,8 @@ public class Producto {
         return precio;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getImagen() {
+        return imagen;
     }
     
 
@@ -56,8 +56,8 @@ public class Producto {
         this.precio = precio;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
     
 }
