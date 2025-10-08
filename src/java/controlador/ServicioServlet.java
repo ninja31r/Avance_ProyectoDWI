@@ -45,12 +45,12 @@ public class ServicioServlet extends HttpServlet {
                     Servicio s = new Servicio();
                     s.setNombre(request.getParameter("nombre"));
                     s.setPrecio(Double.parseDouble(request.getParameter("precio")));
-                    s.setDescripcion(request.getParameter("descripcion"));
+                    s.setImagen(request.getParameter("imagen"));
                     
                     System.out.println("Datos recibidos para registrar:");
                     System.out.println("Nombre: " + s.getNombre());
                     System.out.println("Precio: " + s.getPrecio());
-                    System.out.println("Descripcion: " + s.getDescripcion());
+                    System.out.println("Imagen: " + s.getImagen());
                     
                     dao.registrar(s);
                 } catch (Exception e) {
@@ -66,7 +66,7 @@ public class ServicioServlet extends HttpServlet {
                     s.setId(Integer.parseInt(request.getParameter("id")));
                     s.setNombre(request.getParameter("nombre"));
                     s.setPrecio(Double.parseDouble(request.getParameter("precio")));
-                    s.setDescripcion(request.getParameter("descripcion"));
+                    s.setImagen(request.getParameter("imagen"));
 
                     System.out.println("Datos recibidos para editar ID=" + s.getId());
                     dao.actualizar(s);

@@ -1,18 +1,20 @@
 package modelo_entidad;
-
+import java.time.LocalTime;
 public class Servicio {
     private int id;
     private String nombre;
     private double precio;
-    private String descripcion;
+    private String imagen;
+    private LocalTime duracion;
 
     public Servicio() {}
 
-    public Servicio(int id, String nombre, double precio, String descripcion) {
+    public Servicio(int id, String nombre, double precio, String imagen, LocalTime duracion) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
-        this.descripcion = descripcion;
+        this.imagen = imagen;
+        this.duracion = duracion;
     }
 
     public int getId() { return id; }
@@ -24,6 +26,9 @@ public class Servicio {
     public double getPrecio() { return precio; }
     public void setPrecio(double precio) { this.precio = precio; }
 
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getImagen() { return imagen; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
+
+    public LocalTime getDuracion() { return duracion; }
+    public void setDuracion(LocalTime duracion) { this.duracion = duracion; }
 }

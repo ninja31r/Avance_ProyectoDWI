@@ -14,18 +14,14 @@
                for (Servicio s : listaServicios) { %>
             <div class="list-group-item list-group-item-action d-flex align-items-center shadow-sm mb-2">
                 
-                <!-- Imagen del servicio -->
-                <img src="https://via.placeholder.com/80x80?text=Serv" 
-                     class="rounded me-3" alt="<%= s.getNombre() %>">
+                <img src="<%= s.getImagen() %>" class="rounded me-3" style="max-width: 200px; height: auto;">
 
-                <!-- Información en horizontal con espacio entre cada campo -->
-                <div class="d-flex align-items-center flex-grow-1 gap-4">
-                    <div class="fw-bold"><%= s.getNombre() %></div>
-                    <div class="fw-bold text-primary">S/. <%= s.getPrecio() %></div>
-                    <div class="fw-bold">Maestro: Jose Valverde</div>
+                <div class="align-items-center flex-grow-1 gap-4">
+                    <div class="fw-bold fs-4"><%= s.getNombre() %></div>
+                    <div class="fw-bold text-primary fs-4">S/. <%= s.getPrecio() %></div>
                 </div>
+                <div class="fw-bold fs-4">Horas estimadas: <%= s.getDuracion() %></div>
                
-                <!-- Botón a la derecha -->
                 <a href="login.jsp" class="btn btn-md btn-primary ms-3">Agregar al Carrito</a>
             </div>
         <% } } else { %>

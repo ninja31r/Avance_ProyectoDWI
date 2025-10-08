@@ -19,7 +19,8 @@ public class ServicioDAO {
                 s.setId(rs.getInt("servicio_id"));
                 s.setNombre(rs.getString("nombre"));
                 s.setPrecio(rs.getDouble("precio"));
-                s.setDescripcion(rs.getString("descripcion"));
+                s.setImagen(rs.getString("imagen"));
+                s.setDuracion(rs.getTime("duracion").toLocalTime());
                 lista.add(s);
             }
         } catch (SQLException e) {
@@ -28,42 +29,42 @@ public class ServicioDAO {
         return lista;
     }
 
-    // ✅ Registrar servicio
+    // Registrar servicio
     public void registrar(Servicio s) {
-        String sql = "INSERT INTO Servicios(nombre, precio, cliente, descripcion, estado, fecha) VALUES (?, ?, ?, ?, ?, ?)"; 
+        String sql = "INSERT INTO Servicios(nombre, precio, cliente, imagen, estado, fecha) VALUES (?, ?, ?, ?, ?, ?)"; 
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, s.getNombre());
             ps.setDouble(2, s.getPrecio());
-            ps.setString(4, s.getDescripcion());
+            ps.setString(4, s.getImagen());
 
             ps.executeUpdate();
-            System.out.println("✅ Servicio registrado correctamente");
+            System.out.println("✅Servicio registrado correctamente");
         } catch (SQLException e) {
             System.out.println("Error al registrar servicio: " + e.getMessage());
         }
     }
 
-    // ✅ Actualizar servicio
+    //  Actualizar servicio
     public void actualizar(Servicio s) {
-        String sql = "UPDATE Servicios SET nombre=?, precio=?, cliente=?, descripcion=?, estado=?, fecha=? WHERE servicio_id=?"; 
+        String sql = "UPDATE Servicios SET nombre=?, precio=?, cliente=?, imagen=?, estado=?, fecha=? WHERE servicio_id=?"; 
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, s.getNombre());
             ps.setDouble(2, s.getPrecio());
-            ps.setString(4, s.getDescripcion());
+            ps.setString(4, s.getImagen());
             ps.setInt(7, s.getId());
 
             ps.executeUpdate();
-            System.out.println("✅ Servicio actualizado correctamente");
+            System.out.println(" Servicio actualizado correctamente");
         } catch (SQLException e) {
             System.out.println("Error al actualizar servicio: " + e.getMessage());
         }
     }
 
-    // ✅ Eliminar servicio
+    //  Eliminar servicio
     public void eliminar(int id) {
         String sql = "DELETE FROM Servicios WHERE servicio_id=?"; 
         try (Connection con = Conexion.conectar();
@@ -71,7 +72,7 @@ public class ServicioDAO {
 
             ps.setInt(1, id);
             ps.executeUpdate();
-            System.out.println("✅ Servicio eliminado correctamente");
+            System.out.println(" Servicio eliminado correctamente");
         } catch (SQLException e) {
             System.out.println("Error al eliminar servicio: " + e.getMessage());
         }
