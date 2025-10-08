@@ -2,75 +2,48 @@ package controlador;
 
 import java.io.IOException;
 import java.util.List;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import modelo_dao.ProductoDAO;
-import modelo_entidad.Producto;
+import modelo_dto.DtoProducto;
 
 @WebServlet(name = "MenuProductoServlet", urlPatterns = {"/MenuProductoServlet"})
 public class MenuProductoServlet extends HttpServlet {
 
-    private ProductoDAO dao = new ProductoDAO();
+    private final ProductoDAO dao = new ProductoDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String accion = request.getParameter("accion");
-        if (accion == null || accion.equals("listar")) {
-            listarProductos(request, response);
-        } else if (accion.equals("eliminar")) {
-            eliminarProducto(request, response);
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Acción no válida");
-        }
+        List<DtoProducto> lista = dao.listarDTO();
+        
+        request.setAttribute("productos", lista);
+        request.getRequestDispatcher("menuProductos.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DtoProducto dto = new DtoProducto();
+        dto.setNombre(request.getParameter("nombre"));
+        dto.setStock(Integer.parseInt(request.getParameter("stock")));
+        dto.setPrecio(Integer.parseInt(request.getParameter("precio")));
+        dto.setImagen(request.getParameter("imagen"));
 
-        String accion = request.getParameter("accion");
-        if (accion == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Acción no válida");
-        } else if (accion.equals("agregar")) {
-            agregarProducto(request, response);
-        }  else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Acción no válida");
-        }
-    }
-
-    // ================== MÉTODOS PRIVADOS ==================
-
-    private void listarProductos(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        List<Producto> lista = dao.listar();
-        request.setAttribute("productos", lista);
-        RequestDispatcher rd = request.getRequestDispatcher("menuProductos.jsp");
-        rd.forward(request, response);
-    }
-
-    private void agregarProducto(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        String nombre = request.getParameter("nombre");
-        int stock = Integer.parseInt(request.getParameter("stock"));
-        int precio = Integer.parseInt(request.getParameter("precio"));
-        String imagen = request.getParameter("imagen");
-
-        Producto p = new Producto(0, nombre, stock, precio, imagen);
-        dao.agregar(p);
+        dao.agregarDTO(dto);
+        response.setStatus(HttpServletResponse.SC_OK);
         response.sendRedirect("MenuProductoServlet");
     }
 
-    private void eliminarProducto(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        dao.eliminar(id);
-        response.sendRedirect("MenuProductoServlet");
-    }
+        DtoProducto dto = new DtoProducto();
+        dto.setId(id);
 
+        dao.eliminarDTO(dto);
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
 }

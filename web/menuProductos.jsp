@@ -2,6 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!-- java scrip para eliminar-->
+<script>
+async function eliminarProducto(id) {
+    await fetch("MenuProductoServlet?id=" + id, { method: "DELETE" });
+    location.reload(); //recargar pag
+}
+</script>
 
 <jsp:include page="components/layout/header.jsp" />
 
@@ -10,8 +17,6 @@
     <div class="card p-4 shadow-sm mb-4">
         <h5>Registrar nuevo producto</h5>
         <form method="post" action="MenuProductoServlet">
-            <input type="hidden" name="accion" value="agregar"/>
-
             <div class="mb-3">
                 <label class="form-label">Nombre</label>
                 <input type="text" name="nombre" class="form-control" required>
@@ -36,7 +41,7 @@
         </form>
     </div>
 
-    <!--  Tabla de productos -->
+    <!-- Tabla de productos -->
     <table class="table table-striped table-hover shadow-sm">
         <thead class="table-dark">
             <tr>
@@ -49,39 +54,33 @@
             </tr>
         </thead>
         <tbody>
-            <c:choose>
-                <c:when test="${not empty productos}">
-                    <c:forEach var="p" items="${productos}">
-                        <tr>
-                            <td>${p.id}</td>
-                            <td>${p.nombre}</td>
-                            <td>${p.stock}</td>
-                            <td>S/. <fmt:formatNumber value="${p.precio}" type="number" minFractionDigits="0"/></td>
-                            <td>
-                                <c:if test="${not empty p.imagen}">
-                                    <img src="${p.imagen}" alt="Imagen" width="60" height="60" class="rounded">
-                                </c:if>
-                            </td>
-                            <td>
-                                <!-- Botón Eliminar -->
-                                <form method="get" action="MenuProductoServlet" class="d-inline">
-                                    <input type="hidden" name="accion" value="eliminar"/>
-                                    <input type="hidden" name="id" value="${p.id}"/>
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('¿Desea eliminar este producto?')">
-                                        Eliminar
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <tr>
-                        <td colspan="6" class="text-center text-muted">No hay productos registrados.</td>
-                    </tr>
-                </c:otherwise>
-            </c:choose>
+            <c:forEach var="p" items="${productos}">
+                <tr id="fila-${p.id}">
+                    <td>${p.id}</td>
+                    <td>${p.nombre}</td>
+                    <td>${p.stock}</td>
+                    <td>S/. <fmt:formatNumber value="${p.precio}" type="number" minFractionDigits="0"/></td>
+                    <td>
+                        <c:if test="${not empty p.imagen}">
+                            <img src="${p.imagen}" alt="Imagen" width="60" height="60" class="rounded">
+                        </c:if>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger"
+                                onclick="eliminarProducto('${p.id}')">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+
+            <c:if test="${empty productos}">
+                <tr>
+                    <td colspan="6" class="text-center text-muted">
+                        No hay productos registrados.
+                    </td>
+                </tr>
+            </c:if>
         </tbody>
     </table>
 
@@ -91,4 +90,4 @@
     </p>
 </div>
 
- <jsp:include page="components/layout/footer.jsp" />
+<jsp:include page="components/layout/footer.jsp" />

@@ -2,16 +2,17 @@
 <%@page import="java.util.List"%>
 <jsp:include page="components/layout/header.jsp" />
 
-<%@page import="modelo_entidad.Producto"%>
+<%@page import="modelo_dto.DtoProducto"%>
+
 <%
-    List<Producto> listaProductos = (List<Producto>) request.getAttribute("productos");
+    List<DtoProducto> listaProductos = (List<DtoProducto>) request.getAttribute("productos");
 %>
 
     <div class="container mt-5">
         <h2 class="text-center margin-bottom">Productos</h2>
         <div class="row g-4  mt-4">
             <% if (listaProductos != null && !listaProductos.isEmpty()) {
-                   for (Producto p : listaProductos) { %>
+                   for (DtoProducto p : listaProductos) { %>
                 <div class="col-md-4">
                     <div class="card h-100 shadow-sm">
 

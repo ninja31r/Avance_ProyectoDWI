@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modelo_dao.ProductoDAO;
-import modelo_entidad.Producto;
+import modelo_dto.DtoProducto;
 
 @WebServlet(name = "ProductoServlet", urlPatterns = {"/ProductoServlet"})
 public class ProductoServlet extends HttpServlet {
@@ -19,9 +19,10 @@ public class ProductoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // LISTAR PRODUCTOS PÚBLICOS
-        List<Producto> lista = dao.listar();
-        request.setAttribute("productos", lista);
+        // LISTAR PRODUCTOS PÚBLICOS CON DTO
+        List<DtoProducto> listaDTO = dao.listarDTO();
+        request.setAttribute("productos", listaDTO);
+        
         RequestDispatcher rd = request.getRequestDispatcher("productos.jsp");
         rd.forward(request, response);
     }
@@ -29,7 +30,6 @@ public class ProductoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Este servlet público no procesa POST
         response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Método no permitido");
     }
 }
