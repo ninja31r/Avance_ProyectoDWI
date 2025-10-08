@@ -23,8 +23,9 @@
         <div class="collapse navbar-collapse" id="menu">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="index.jsp">Inicio</a></li>
+                 <li class="nav-item"><a class="nav-link active" href="administrar.jsp">Administrar</a></li> <!-- Solo admins -->
                 <li class="nav-item"><a class="nav-link active" href="ProductoServlet">Productos</a></li>
-                <li class="nav-item"><a class="nav-link active" href="svltServicio">Servicios</a></li>
+                <li class="nav-item"><a class="nav-link active" href="ServicioServlet">Servicios</a></li>
                 <% if(usuarioLog == null){ %>
                     <li class="nav-item"><a class="nav-link" href="login.jsp">Iniciar Sesión</a></li>
                     <li class="nav-item"><a class="nav-link" href="registrocliente1.jsp">Registrarse</a></li>

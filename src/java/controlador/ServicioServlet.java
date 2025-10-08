@@ -11,7 +11,7 @@ import java.util.List;
 import modelo_dao.ServicioDAO;
 import modelo_entidad.Servicio;
 
-@WebServlet(name = "svltServicio", urlPatterns = {"/svltServicio"})
+@WebServlet(name = "svltServicio", urlPatterns = {"/ServicioServlet"})
 public class ServicioServlet extends HttpServlet {
 
     private ServicioDAO dao = new ServicioDAO();

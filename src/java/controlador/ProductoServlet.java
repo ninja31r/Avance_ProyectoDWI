@@ -16,29 +16,20 @@ public class ProductoServlet extends HttpServlet {
 
     private ProductoDAO dao = new ProductoDAO();
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // LISTAR PRODUCTOS PÚBLICOS
         List<Producto> lista = dao.listar();
-        
-        request.setAttribute("listaProductos", lista);
+        request.setAttribute("productos", lista);
         RequestDispatcher rd = request.getRequestDispatcher("productos.jsp");
         rd.forward(request, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Servlet para listar productos";
+        // Este servlet público no procesa POST
+        response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Método no permitido");
     }
 }

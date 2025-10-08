@@ -1,9 +1,3 @@
-<%-- 
-    Document   : registrocliente1
-    Created on : 18 set. 2025, 12:33:14
-    Author     : Juan Andre Zea Apaza
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="modelo_dao.UsuarioDAO"%>
 <%@page import="modelo_entidad.Usuario"%>

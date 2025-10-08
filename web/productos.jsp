@@ -4,7 +4,7 @@
 
 <%@page import="modelo_entidad.Producto"%>
 <%
-    List<Producto> listaProductos = (List<Producto>) request.getAttribute("listaProductos");
+    List<Producto> listaProductos = (List<Producto>) request.getAttribute("productos");
 %>
 
     <div class="container mt-5">
