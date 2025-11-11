@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -127,10 +128,88 @@
                         <button type="submit" class="btn btn-primary w-100 mt-2">Ingresar</button>
                     </form>
 
+=======
+<%-- 
+    Document   : login
+    Created on : 3 set. 2025, 11:03:44
+    Author     : Juan Andre Zea Apaza
+--%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="model.Usuario"%>
+<%@page import="dao.UsuarioDAO"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+     <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.jsp">Auditel Import S.A.C</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.jsp">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="productos.jsp">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.jsp">Iniciar Sesión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="registroCliente.jsp">Registrarse</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card shadow-lg">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h4>Iniciar Sesión</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="login.jsp">
+                            <div class="mb-3">
+                                <label class="form-label">Correo</label>
+                                <input type="email" class="form-control" name="txtCorreo" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" name="txtPassword" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" name="accion" value="Ingresar" class="btn btn-primary">
+                                    Ingresar
+                                </button>
+                            </div>
+                        </form>
+<%
+    if(request.getParameter("accion") != null){
+        String correo = request.getParameter("txtCorreo");
+        String password = request.getParameter("txtPassword");
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario u = dao.validar(correo, password);
+
+        if(u != null && u.getCorreo() != null){
+            session.setAttribute("usuario", u);
+            response.sendRedirect("menu.jsp");
+        } else {
+%>
+            <div class="alert alert-danger mt-3">Correo o contraseña incorrectos</div>
+<%
+        }
+    }
+%>
+                    </div>
+>>>>>>> 8f23735d0db3603ae5cb1b9e21da22f3ee0b841b
                 </div>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 </div>
 
 <!-- Pie -->
@@ -139,5 +218,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+=======
+>>>>>>> 8f23735d0db3603ae5cb1b9e21da22f3ee0b841b
 </body>
 </html>
