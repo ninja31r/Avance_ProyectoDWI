@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>Pago | Auditel Import S.A.C</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- CDN actualizados -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!--  Font Awesome (para los íconos fa usados en botones y modal) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+</h:head>
+
+<h:body style="background-color:#f8f9fa;">
+<ui:include src="/components/layout/header.xhtml" />
+
+    <div class="container mt-5">
+        <div class="card shadow-lg rounded-4 p-4 border-0">
+            <div class="card-header bg-primary text-white fw-bold rounded-3 mb-3">
+                💳 Pago de Pedido
+            </div>
+
+            <h:form id="frmPago">
+                <h3 class="text-center mb-4">Formulario de Pago</h3>
+                <p class="text-center text-muted mb-4">
+                    Selecciona tu método de pago para continuar.
+                </p>
+
+                <!-- ✅ Radios de método de pago (HTML, sin error de BootsFaces) -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Método de Pago:</label><br/>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="metodo" id="tarjeta" value="tarjeta" checked="checked"/>
+                        <label class="form-check-label" for="tarjeta">💳 Tarjeta de Crédito / Débito</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="metodo" id="transferencia" value="transferencia"/>
+                        <label class="form-check-label" for="transferencia">🏦 Transferencia Bancaria</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="metodo" id="entrega" value="entrega"/>
+                        <label class="form-check-label" for="entrega">💵 Pago Contra Entrega</label>
+                    </div>
+                </div>
+
+                <hr/>
+
+              <!-- Número de Tarjeta -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-dark">Número de Tarjeta</label>
+                    <h:inputText styleClass="form-control">
+                        <f:passThroughAttribute name="placeholder" value="**** **** **** ****"/>
+                    </h:inputText>
+                </div>
+
+                <!-- Nombre del Titular -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-dark">Nombre del Titular</label>
+                    <h:inputText styleClass="form-control">
+                        <f:passThroughAttribute name="placeholder" value="Nombre tal como figura en la tarjeta"/>
+                    </h:inputText>
+                </div>
+
+                <!-- Fecha de Vencimiento -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold text-dark">Fecha de Vencimiento</label>
+                    <h:inputText styleClass="form-control">
+                        <f:passThroughAttribute name="placeholder" value="MM/AA"/>
+                    </h:inputText>
+                </div>
+
+                <!-- CVV -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold text-dark">CVV</label>
+                    <h:inputText styleClass="form-control">
+                        <f:passThroughAttribute name="placeholder" value="***"/>
+                    </h:inputText>
+                </div>
+                <div class="text-center mt-4">
+                    <h:commandButton value="Pagar Ahora"
+                                     styleClass="btn btn-success me-2"
+                                     onclick="mostrarModalPago();return false;">
+                        <i class="fa fa-credit-card"></i>
+                    </h:commandButton>
+                </div>
+
+            </h:form>
+        </div>
+
+        <!-- Botones secundarios -->
+        <div class="text-center mt-4">
+            <a href="ProductoServlet" class="btn btn-secondary">
+                 <i class="fa fa-arrow-left"></i> Seguir Comprando
+            </a>
+            <a href="index.jsp" class="btn btn-outline-primary">
+                <i class="fa fa-home"></i> Volver al Inicio
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+<div class="modal fade" id="modalPago" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+
+            <i class="fa fa-check-circle text-success" style="font-size:60px;"></i>
+            <h4 class="mt-3">Pago Realizado con Éxito</h4>
+            <p class="text-muted">¡Gracias por tu compra! Tu pedido está siendo procesado.</p>
+
+            <h:form id="formFactura">
+                <h:commandButton value="Ver Factura"
+                                 action="#{pedidosBean.prepararFactura}"
+                                 styleClass="btn btn-outline-primary btn-sm" />
+            </h:form>
+            <button type="button" class="btn btn-primary mt-3" onclick="cerrarModalPago()">
+                <i class="fa fa-check"></i> Aceptar
+            </button>
+        </div>
+    </div>
+</div>
+
+    <script>
+        // Mostrar ventana flotante del pago
+        function mostrarModalPago() {
+            const modal = new bootstrap.Modal(document.getElementById('modalPago'));
+            modal.show();
+        }
+
+        // Cerrar ventana flotante y redirigir
+        function cerrarModalPago() {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalPago'));
+            modal.hide();
+            window.location = 'ProductoServlet';
+        }
+    </script>
+
+</h:body>
+</html>

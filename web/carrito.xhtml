@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Mi Carrito</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</h:head>
+
+<h:body class="bg-light">
+
+    <!-- Ejecuta método para agregar producto desde parámetro URL -->
+    <f:metadata>
+        <f:viewAction action="#{carritoBean.agregarDesdeParametro}" />
+    </f:metadata>
+
+    <!-- Encabezado general -->
+    <ui:include src="/components/layout/header.xhtml"/>
+
+    <div class="container mt-5 mb-5">
+        <h2 class="text-center mb-4">🛒 Mi Carrito de Compras</h2>
+
+        <h:form>
+            <!-- Tabla de productos -->
+            <h:dataTable value="#{carritoBean.carrito}" var="p"
+                         styleClass="table table-striped text-center align-middle">
+                <h:column>
+                    <f:facet name="header">Producto</f:facet>
+                    #{p.nombre}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Cantidad</f:facet>
+                    #{p.stock}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Precio</f:facet>
+                    S/ #{p.precio}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Subtotal</f:facet>
+                    S/ #{p.precio * p.stock}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Acciones</f:facet>
+                    <h:commandButton value="Eliminar"
+                                     action="#{carritoBean.eliminarProducto(p.id)}"
+                                     styleClass="btn btn-danger btn-sm"/>
+                </h:column>
+            </h:dataTable>
+
+            <!-- Total general -->
+            <div class="text-end fw-bold mt-3">
+                <p>Total: S/ #{carritoBean.total}</p>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="text-end mt-3">
+                <!-- Botón Seguir comprando -->
+                <h:outputLink value="ProductoServlet" styleClass="btn btn-outline-primary px-4 me-2">
+                    <i class="bi bi-arrow-left-circle"></i> Seguir comprando
+                </h:outputLink>
+
+                <!-- Botón para generar factura -->
+                <h:commandButton value="Generar Factura"
+                                 action="#{carritoBean.generarFactura}"
+                                 styleClass="btn btn-success px-4"/>
+            </div>
+        </h:form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</h:body>
+</html>

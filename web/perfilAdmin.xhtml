@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>Perfil Administrador • Auditel Import</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #2a003f, #4a148c, #7b1fa2);
+            background-attachment: fixed;
+            font-family: "Segoe UI", sans-serif;
+            min-height: 100vh;
+        }
+
+        .profile-card {
+            background: rgba(255,255,255,0.20);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            width: 100%;
+            max-width: 500px;
+            animation: fade .7s ease-in-out;
+        }
+
+        @keyframes fade {
+            from {opacity:0; transform: translateY(15px);}
+            to {opacity:1; transform: translateY(0);}
+        }
+
+        .avatar {
+            width:110px; height:110px;
+            background:rgba(255,255,255,0.3);
+            border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+        }
+
+        .label-text {font-size: .85rem; opacity:.85;}
+        .value-box {
+            font-size: 1.05rem; font-weight:600;
+            border-bottom:1px solid rgba(255,255,255,0.2);
+            padding-bottom:6px;
+        }
+
+        .btn-modern {
+            background:rgba(255,255,255,0.2);
+            border:1px solid rgba(255,255,255,0.4);
+            color:#fff; border-radius:30px;
+            padding:8px 22px; transition:.3s;
+        }
+        .btn-modern:hover {background:rgba(255,255,255,0.35); transform:translateY(-2px);}
+    </style>
+</h:head>
+
+<h:body>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:100vh;">
+    <div class="profile-card text-center">
+
+        <!-- Avatar -->
+        <div class="avatar mb-2">
+            <i class="bi bi-shield-lock-fill text-white" style="font-size:3.5rem;"></i>
+        </div>
+
+        <h3 class="fw-bold mb-1">
+            <h:outputText value="#{perfilUsuarioBean.usuario.nombre} #{perfilUsuarioBean.usuario.apellidos}"/>
+        </h3>
+        <p class="mb-4">Administrador del Sistema</p>
+
+        <!-- Datos -->
+        <div class="row text-start mb-3">
+            <div class="col-md-12 mb-3">
+                <div class="label-text">Correo</div>
+                <div class="value-box"><h:outputText value="#{perfilUsuarioBean.usuario.correo}"/></div>
+            </div>
+        </div>
+
+        <!-- Botón -->
+        <h:form>
+            <h:commandButton value="⟵ Volver al inicio"
+                             action="#{perfilUsuarioBean.regresar}"
+                             styleClass="btn-modern"/>
+        </h:form>
+
+    </div>
+</div>
+</h:body>
+</html>

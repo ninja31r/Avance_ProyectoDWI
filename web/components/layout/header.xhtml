@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <!-- Bootstrap base -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    
+    <!--  Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</h:head>
+<ui:composition>
+    <h:form>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="index.jsp">Auditel Import S.A.C</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                        <!-- Enlaces generales -->
+                        <li class="nav-item">
+                            <a href="ProductoServlet" class="nav-link">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="ServicioServlet" class="nav-link">Servicios</a>
+                        </li>
+
+                        <!--  ADMIN -->
+                        <ui:fragment rendered="#{headerBean.admin}">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="adminMenu" data-bs-toggle="dropdown">
+                                    <i class="bi bi-shield-lock-fill fs-5 me-1"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="adminMenu">
+                                    <li>
+                                        <h6 class="dropdown-header text-center text-primary">
+                                            #{headerBean.nombreUsuario} (Admin)
+                                        </h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="perfilAdmin.xhtml"><i class="bi bi-person-badge-fill me-2"></i> Perfil</a></li>
+                                    <li><a class="dropdown-item" href="administrar.jsp"><i class="bi bi-gear-fill me-2"></i> Administrar</a></li>
+                                    <li><a class="dropdown-item text-danger" href="CerrarSesion"><i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión</a></li>
+                                </ul>
+                            </li>
+                        </ui:fragment>
+
+                        <!--  TRABAJADOR -->
+                                <ui:fragment rendered="#{headerBean.trabajador}">
+                                    <li class="nav-item dropdown">
+                                        <!--  ICONO Y TOGGLE -->
+                                        <a class="nav-link dropdown-toggle d-flex align-items-center"
+                                           href="#" id="trabMenu"
+                                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-briefcase-fill fs-5 me-1"></i>
+                                        </a>
+
+                                        <!-- MENÚ DESPLEGABLE -->
+                                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="trabMenu">
+                                            <li>
+                                                <h6 class="dropdown-header text-center text-primary">
+                                                    #{headerBean.nombreUsuario} (Trabajador)
+                                                </h6>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="perfilTrabajador.xhtml">
+                                                    <i class="bi bi-person-lines-fill me-2"></i> Perfil
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="menuPedidos.xhtml">
+                                                    <i class="bi bi-cart-check-fill me-2"></i> Gestión de Pedidos
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"/></li>
+                                            <li>
+                                                <a class="dropdown-item text-danger" href="CerrarSesion">
+                                                    <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <!-- FIX: Asegurar carga JS de Bootstrap -->
+                                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+                                    <!-- FIX EXTRA: Asegura que los dropdowns funcionen dentro de JSF -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            const dropdowns = document.querySelectorAll('.dropdown-toggle');
+                                            dropdowns.forEach(function (dd) {
+                                                new bootstrap.Dropdown(dd);
+                                            });
+                                        });
+                                    </script>
+                                </ui:fragment>
+
+
+                        <!-- CLIENTE -->
+                                <ui:fragment rendered="#{headerBean.cliente}">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="usuarioMenu" data-bs-toggle="dropdown">
+                                            <div class="icono-usuario-css"></div>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="usuarioMenu">
+                                            <li>
+                                                <h6 class="dropdown-header text-center text-primary">
+                                                    #{headerBean.nombreUsuario}
+                                                </h6>
+                                            </li>
+                                            <li><a class="dropdown-item disabled text-muted">Estado: Activo</a></li>
+                                            <li><hr class="dropdown-divider"/></li>
+                                            <li><a class="dropdown-item" href="perfilCliente.xhtml">
+                                                <i class="bi bi-person-lines-fill me-2"></i> Mi Perfil</a></li>
+                                            <li><a class="dropdown-item text-danger" href="CerrarSesion">
+                                                <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <style>
+                                        /* === ICONO DE USUARIO HECHO CON CSS (igual tamaño y proporción que el JSP) === */
+                                        .icono-usuario-css {
+                                            position: relative;
+                                            width: 28px;
+                                            height: 28px;
+                                            border-radius: 50%;
+                                            background: white; /* fondo blanco como el bi-person-circle */
+                                            border: 2px solid #fff;
+                                            box-shadow: 0 0 3px rgba(0,0,0,0.2);
+                                        }
+
+                                        /* cabeza */
+                                        .icono-usuario-css::before {
+                                            content: "";
+                                            position: absolute;
+                                            top: 4px;
+                                            left: 50%;
+                                            width: 8px;
+                                            height: 8px;
+                                            border-radius: 50%;
+                                            background: #0d6efd; /* azul principal */
+                                            transform: translateX(-50%);
+                                        }
+
+                                        /* cuerpo */
+                                        .icono-usuario-css::after {
+                                            content: "";
+                                            position: absolute;
+                                            bottom: 3px;
+                                            left: 50%;
+                                            width: 16px;
+                                            height: 8px;
+                                            border-radius: 50% 50% 0 0;
+                                            background: #0d6efd;
+                                            transform: translateX(-50%);
+                                        }
+
+                                        /* efecto hover como en el JSP */
+                                        .nav-link:hover .icono-usuario-css {
+                                            background-color: #eaf2ff;
+                                            box-shadow: 0 0 5px rgba(255,255,255,0.6);
+                                        }
+
+                                        /* elimina la flechita del dropdown */
+                                        .dropdown-toggle::after {
+                                            display: none !important;
+                                        }
+                                    </style>
+                                </ui:fragment>
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+
+    </h:form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const contadorElemento = document.getElementById('contadorCarrito');
+            if (contadorElemento) {
+                const contador = localStorage.getItem('contadorCarrito') || 0;
+                contadorElemento.textContent = contador;
+            }
+        });
+    </script>
+</ui:composition>
+</html>

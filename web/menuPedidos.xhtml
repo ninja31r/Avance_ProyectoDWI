@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:pt="jakarta.faces.passthrough"
+      xmlns:c="jakarta.tags.core"
+      xmlns:fn="jakarta.tags.functions"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>Gestión de Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: "Segoe UI", sans-serif;
+        }
+        .btn-volver {
+            background: linear-gradient(90deg, #007bff, #6610f2);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all .3s ease;
+        }
+        .btn-volver:hover {
+            background: linear-gradient(90deg, #6610f2, #007bff);
+            transform: translateY(-2px);
+        }
+        .card {
+            border-radius: 20px;
+            transition: transform .2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</h:head>
+
+<h:body>
+<ui:include src="/components/layout/header.xhtml" />
+
+    <div class="container mt-5">
+        <h2 class="text-center fw-bold mb-4 text-primary">Gestión de Pedidos</h2>
+        <p class="text-center text-muted mb-5">Selecciona una opción para continuar</p>
+
+        <div class="row justify-content-center g-4">
+
+            <!-- Gestión de Pedidos -->
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-receipt display-4 text-success mb-3"></i>
+                        <h5 class="fw-bold">Gestión de Pedidos</h5>
+                        <p class="text-muted">Ver y administrar pedidos en línea</p>
+                        <h:form>
+                            <h:commandButton value="Ir"
+                                             action="#{pedidosBean.irGestionPedidos}"
+                                             styleClass="btn btn-success px-4 py-2 rounded-pill fw-bold"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicio: Gestión Técnica -->
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-tools display-4 text-primary mb-3"></i>
+                        <h5 class="fw-bold">Gestión de Servicios Técnicos</h5>
+                        <p class="text-muted">
+                            Administra y registra los servicios de instalación y mantenimiento brindados a los clientes.
+                        </p>
+                        <h:form>
+                            <h:commandButton value="Ir"
+                                             action="#{pedidosBean.irMantenimiento}"
+                                             styleClass="btn btn-primary px-4 py-2 rounded-pill fw-bold text-white"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestion: Instalaciones -->
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-tools display-4 text-success mb-3"></i>
+                        <h5 class="fw-bold text-dark">Gestión de Instalaciones</h5>
+                        <p class="text-muted mb-4">
+                            Visualiza, programa y consulta las <strong>instalaciones técnicas</strong> 
+                            realizadas por nuestros especialistas. 
+                        </p>
+
+                        <h:form>
+                            <h:commandButton value="Ir"
+                                             action="agendaInstalaciones.xhtml?faces-redirect=true"
+                                             styleClass="btn btn-success px-4 py-2 rounded-pill fw-bold"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Botón volver al inicio -->
+        <div class="text-center mt-5">
+            <h:form>
+                <h:commandButton value="⟵ Volver al inicio"
+                                 action="#{perfilUsuarioBean.regresar}"
+                                 styleClass="btn-volver"/>
+            </h:form>
+        </div>
+    </div>
+
+</h:body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:c="jakarta.tags.core"
+      xmlns:pt="jakarta.faces.passthrough"      
+            xmlns:ui="jakarta.faces.facelets">
+
+
+<h:head>
+    <title>Gestión de Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"/>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: "Segoe UI", Roboto, sans-serif;
+        }
+
+        .titulo {
+            font-weight: 700;
+            color: #0d6efd;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .table th {
+            background-color: #0d6efd;
+            color: white;
+            text-align: center;
+        }
+
+        .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Colores dinámicos del estado */
+        .estado-pedido {
+            font-weight: 600;
+            border-radius: 30px;
+            padding: 6px 15px;
+            text-transform: capitalize;
+        }
+        .estado-pendiente {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .estado-en-proceso {
+            background-color: #17a2b8;
+        }
+        .estado-entregado {
+            background-color: #28a745;
+        }
+
+        .btn-volver {
+            background: none;
+            border: none;
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 1.6rem;
+            color: #6c757d;
+        }
+
+        .btn-volver:hover {
+            color: #dc3545;
+            transform: scale(1.1);
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .search-bar input {
+            border-radius: 30px;
+            padding: 8px 15px;
+            width: 280px;
+        }
+
+        .search-bar button {
+            border-radius: 30px;
+            padding: 8px 20px;
+        }
+
+        .alerta-vacia {
+            text-align: center;
+            color: #6c757d;
+            padding: 15px;
+        }
+
+        /* Estilo de tabla de detalles */
+        .detalle-table th {
+            background-color: #198754;
+            color: white;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <!-- HEADER -->
+    <ui:include src="/components/layout/header.xhtml" />
+    
+<div class="container mt-5 position-relative">
+
+    <!-- Botón de cerrar -->
+    <button type="button" class="btn-cerrar" onclick="window.history.back();" title="Volver">
+        <i class="bi bi-x-lg"></i>
+    </button>
+
+    <!-- Título principal -->
+    <div class="text-center mb-4">
+        <h2 class="titulo"><i class="bi bi-clipboard-check"></i> Gestión de Pedidos</h2>
+        <p class="text-muted">
+            Revise los pedidos realizados por los clientes y actualice su estado según el progreso.
+        </p>
+    </div>
+
+    <h:form id="formGestionPedidos">
+
+        <!--  Barra de búsqueda -->
+        <div class="search-bar">
+            <h:inputText value="#{pedidosBean.busqueda}"
+                         styleClass="form-control"
+                         pt:placeholder="Buscar por cliente o ID..."/>
+            <h:commandButton value="Buscar"
+                             action="#{pedidosBean.buscarPedidos}"
+                             styleClass="btn btn-primary rounded-pill fw-bold"/>
+            <h:commandButton value="Limpiar"
+                             action="#{pedidosBean.irGestionPedidos}"
+                             styleClass="btn btn-outline-secondary rounded-pill fw-semibold"/>
+        </div>
+
+        <!--Mensaje de confirmación -->
+        <h:messages globalOnly="true" layout="table"
+                    style="color:green; text-align:center; font-weight:bold;"/>
+
+        <!-- LISTA DE PEDIDOS -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white fw-bold">
+                <i class="bi bi-list-ul"></i> Pedidos Registrados
+            </div>
+            <div class="card-body">
+                <c:choose>
+                    
+                    <c:when test="#{not empty pedidosBean.listaPedidos}">
+                        <table class="table table-bordered table-hover align-middle">
+                            <thead>
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Total (S/)</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="pedido" items="#{pedidosBean.listaPedidos}">
+                                <tr>
+                                    <td>#{pedido.id}</td>
+                                    <td>#{pedido.nombreCliente}</td>
+                                    <td>
+                                        <h:outputText value="#{pedido.fecha}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Lima"/>
+                                        </h:outputText>
+                                    </td>
+                                    <td>
+                                        <!-- Muestra el total o 0.00 por ahora -->
+                                        <h:outputText value="#{pedido.total != null ? pedido.total : 0}">
+                                            <f:convertNumber pattern="S/ #,##0.00"/>
+                                        </h:outputText>
+                                    </td>
+                                    <td>
+                                        <span class="estado-pedido 
+                                                     #{pedido.estado eq 'Pendiente' ? 'estado-pendiente' :
+                                                       pedido.estado eq 'En proceso' ? 'estado-en-proceso' :
+                                                       pedido.estado eq 'Entregado' ? 'estado-entregado' : ''}">
+                                            #{pedido.estado}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <h:commandButton value="Ver Detalle"
+                                                         action="#{pedidosBean.seleccionarPedido(pedido)}"
+                                                         styleClass="btn btn-outline-primary btn-sm rounded-pill fw-semibold"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="alerta-vacia">
+                            <i class="bi bi-info-circle"></i> No hay pedidos registrados actualmente.
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+
+        <!-- DETALLE DE PEDIDO SELECCIONADO -->
+        <c:if test="#{not empty pedidosBean.pedidoSeleccionado}">
+            <div class="card">
+                <div class="card-header bg-success text-white fw-bold">
+                    <i class="bi bi-bag-check"></i> Detalle del Pedido
+                </div>
+                <div class="card-body">
+                    <p><strong>Cliente:</strong> #{pedidosBean.pedidoSeleccionado.nombreCliente}</p>
+                    <p><strong>Fecha:</strong>
+                        <h:outputText value="#{pedidosBean.pedidoSeleccionado.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Lima"/>
+                        </h:outputText>
+                    </p>
+                    <p><strong>Estado actual:</strong> #{pedidosBean.pedidoSeleccionado.estado}</p>
+
+                    <table class="table table-sm table-bordered detalle-table">
+                        <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="item" items="#{pedidosBean.pedidoSeleccionado.detalles}">
+                            <tr>
+                                <td>#{item.nombreProducto}</td>
+                                <td>#{item.cantidad}</td>
+                                <td>S/ #{item.precioUnitario}</td>
+                                <td>S/ #{item.subtotal}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+
+                    <div class="mt-3 d-flex align-items-center">
+                        <label class="fw-semibold me-2">Actualizar estado:</label>
+                        <h:selectOneMenu value="#{pedidosBean.pedidoSeleccionado.estado}" styleClass="form-select w-auto">
+                            <f:selectItem itemLabel="Pendiente" itemValue="Pendiente"/>
+                            <f:selectItem itemLabel="En proceso" itemValue="En proceso"/>
+                            <f:selectItem itemLabel="Entregado" itemValue="Entregado"/>
+                        </h:selectOneMenu>
+
+                        <h:commandButton value="Actualizar"
+                                         action="#{pedidosBean.actualizarPedidoEstado}"
+                                         styleClass="btn btn-success ms-3 rounded-pill fw-bold px-3"/>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+
+    </h:form>
+</div>
+</h:body>
+</html>

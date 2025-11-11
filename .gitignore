@@ -1,0 +1,28 @@
+# --- Carpetas generadas ---
+/build/
+/dist/
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/nbproject/*.properties
+/nbproject/genfiles.properties
+/nbproject/project.xml
+
+# --- Archivos temporales ---
+*.class
+*.log
+*.tmp
+*.bak
+*.swp
+
+# --- Configuración IDE (otros editores, no NetBeans) ---
+/.idea/
+/.vscode/
+/*.iml
+*.ipr
+*.iws
+
+# --- Archivos del sistema ---
+.DS_Store
+Thumbs.db
+desktop.ini
