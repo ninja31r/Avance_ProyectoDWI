@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import modelo_entidad.Pedido;
 import modelo_entidad.PedidoItem;
+import modelo_entidad.Servicio;
 
 public class PedidoDAO {
 
@@ -151,6 +152,44 @@ public class PedidoDAO {
 
         return pedido;
     }
+    
+// -------------------- LISTAR SERVICIOS DE UN PEDIDO --------------------
+public List<modelo_entidad.Servicio> listarServiciosPorPedido(int pedidoId) {
+    List<modelo_entidad.Servicio> lista = new ArrayList<>();
+
+    String sql = "SELECT s.servicio_id, s.nombre, s.precio, s.duracion, s.imagen " +
+                 "FROM Pedido_servicios ps " +
+                 "INNER JOIN Servicios s ON ps.servicio_id = s.servicio_id " +
+                 "WHERE ps.pedido_id = ?";
+
+    try (Connection con = Conexion.conectar();
+         PreparedStatement pst = con.prepareStatement(sql)) {
+
+        pst.setInt(1, pedidoId);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            modelo_entidad.Servicio s = new modelo_entidad.Servicio();
+            s.setId(rs.getInt("servicio_id"));
+            s.setNombre(rs.getString("nombre"));
+            s.setPrecio(rs.getDouble("precio"));
+            s.setImagen(rs.getString("imagen"));
+
+            Time dur = rs.getTime("duracion");
+            if (dur != null) {
+                s.setDuracion(dur.toLocalTime());
+            }
+
+            lista.add(s);
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error en listarServiciosPorPedido: " + e.getMessage());
+    }
+
+    return lista;
+}
+
 
     // -------------------- ACTUALIZAR ESTADO DEL PEDIDO --------------------
     public boolean actualizarEstado(Pedido pedido) {
@@ -227,7 +266,7 @@ public List<modelo_entidad.Producto> listarProductosPorPedido(int pedidoId) {
         }
 
     } catch (Exception e) {
-        System.out.println("❌ Error al listar productos del pedido: " + e.getMessage());
+        System.out.println("Error al listar productos del pedido: " + e.getMessage());
     }
 
     return lista;
